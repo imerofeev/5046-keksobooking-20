@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Илья Ерофеев](https://up.htmlacademy.ru/javascript/20/user/5046).
-* Наставник: `Неизвестно`.
+* Наставник: `Кекс`.
 
 ---
 
