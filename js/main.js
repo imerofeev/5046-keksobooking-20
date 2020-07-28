@@ -186,7 +186,7 @@ function renderPins(cards) {
 }
 
 function addAttribute(tagList, attributeName) {
-  var firstCard = [cardsData[0]]; if (tagList) {
+  firstCard = [cardsData[0]]; if (tagList) {
     for (var i = 0; i < tagList.length; i++) {
       tagList[i].setAttribute(attributeName, 'true');
     }
