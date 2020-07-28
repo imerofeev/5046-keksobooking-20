@@ -196,7 +196,7 @@ function createCard(card) {
   return cardElement;
 }
 
-function renderCards(container, card) {
+function renderCard(container, card) {
   closePopup();
 
   container.appendChild(card);
@@ -220,8 +220,6 @@ function createPin(card) {
 }
 
 function renderPins(cards) {
-  var fragment = document.createDocumentFragment();
-
   for (var i = 0; i < cards.length; i++) {
     pinTemplateElement.appendChild(createPin(cards[i]));
   }
@@ -277,8 +275,8 @@ function activePage(evt) {
 }
 
 function getValidElement(evt, selectFirst, selectSecond, objectKeys) {
-  var el = (typeof evt === 'undefined') ? rooms : evt.currentTarget; var el = (typeof evt === 'undefined') ? selectFirst : evt.currentTarget;
-  var validRooms = ROOMS_FOR_GUESTS[el.value]; var validEl = objectKeys[el.value];
+  var el = (typeof evt === 'undefined') ? rooms : evt.currentTarget; el = (typeof evt === 'undefined') ? selectFirst : evt.currentTarget;
+  var validRooms = RoomsForGuests[el.value]; var validElem = objectKeys[el.value];
 
   var selectSecondOption = selectSecond.querySelectorAll('option');
   var options = guests.querySelectorAll('option');
@@ -287,15 +285,15 @@ function getValidElement(evt, selectFirst, selectSecond, objectKeys) {
   if (options) {
     if (selectSecondOption) {
       for (var i = 0; i < options.length; i++) {
-        for (var i = 0; i < selectSecondOption.length; i++) {
-          var optionEl = options[i]; var optionEl = selectSecondOption[i];
+        for (i = 0; i < selectSecondOption.length; i++) {
+          var optionElem = options[i]; optionElem = selectSecondOption[i];
 
 
-          optionEl.disabled = (validRooms.indexOf(optionEl.value) === -1) ? true : false; optionEl.disabled = (validEl.indexOf(optionEl.value) === -1) ? true : false;
+          optionElem.disabled = (validRooms.indexOf(optionElem.value) === -1) ? true : false; optionElem.disabled = (validElem.indexOf(optionElem.value) === -1) ? true : false;
         }
       }
 
-      selectSecond.querySelector('option[value="' + validEl[0] + '"]').selected = true;
+      selectSecond.querySelector('option[value="' + validElem[0] + '"]').selected = true;
       guests.querySelector('option[value="' + validRooms[0] + '"]').selected = true;
     }
   }
@@ -389,10 +387,10 @@ var cardsData = getCards(COUNTCARDS);
 
 getAddress(MAIN_PIN_CIRCLE, MAIN_PIN_HALF_CIRCLE);
 addAttribute(adFormFieldset, DISABLED);
+
 getValidElement(undefined, rooms, guests, RoomsForGuests);
 
-mapPinMain.addEventListener('keydown', logButton);
-validRoomsForGuests(); mapPinMain.addEventListener('mousedown', activePage);
+mapPinMain.addEventListener('mousedown', activePage);
 rooms.addEventListener('change', validRoomsForGuests); mapPinMain.addEventListener('keydown', activePage);
 rooms.addEventListener('change', function (evt) {
   getValidElement(evt, rooms, guests, RoomsForGuests);
