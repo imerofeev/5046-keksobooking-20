@@ -156,8 +156,9 @@ function renderCards(cards) {
   var fragment = document.createDocumentFragment();
 
   if (cards.length !== 0) {
-    fragment.appendChild(createCard(cards[i])); for (var i = 0; i < cards.length; i++) {
-    } fragment.appendChild(createCard(cards[i]));
+    for (var i = 0; i < cards.length; i++) {
+      fragment.appendChild(createCard(cards[i]));
+    }
 
     map.insertBefore(fragment, mapFilters); map.insertBefore(fragment, mapFilters);
   }
