@@ -226,7 +226,7 @@ function renderPins(cards) {
 }
 
 function addAttribute(tagList, attributeName) {
-  firstCard = [cardsData[0]]; if (tagList) {
+  if (tagList) {
     for (var i = 0; i < tagList.length; i++) {
       tagList[i].setAttribute(attributeName, 'true');
     }
@@ -391,7 +391,7 @@ addAttribute(adFormFieldset, DISABLED);
 getValidElement(undefined, rooms, guests, RoomsForGuests);
 
 mapPinMain.addEventListener('mousedown', activePage);
-rooms.addEventListener('change', validRoomsForGuests); mapPinMain.addEventListener('keydown', activePage);
+mapPinMain.addEventListener('keydown', activePage);
 rooms.addEventListener('change', function (evt) {
   getValidElement(evt, rooms, guests, RoomsForGuests);
 });
