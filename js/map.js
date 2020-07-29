@@ -2,8 +2,8 @@
 
 (function () {
   var COUNTCARDS = 8;
-  var X_MAIN_PIN = 84;
-  var Y_MAIN_PIN = 72;
+  var X_MAIN_PIN = 65;
+  var Y_MAIN_PIN = 84;
   var map = document.querySelector('.map');
   var mapPinMain = map.querySelector('.map__pin--main');
   var mapFilters = map.querySelector('.map__filters-container');
@@ -31,6 +31,10 @@
   mapPinMain.addEventListener('keydown', activePage);
 
   window.map = {
-    map: map
+    X_MAIN_PIN: X_MAIN_PIN,
+    Y_MAIN_PIN: Y_MAIN_PIN,
+    map: map,
+    mapPinMain: mapPinMain,
+    activePage: activePage
   };
 })();
