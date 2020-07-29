@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var pinTemplate = document.querySelector('#pin')
-    .content;
+  var pinTemplate = document.querySelector('#pin').content;
+
   var pinTemplateElement = document.querySelector('.map__pins');
 
   function createPin(card) {
@@ -28,6 +28,6 @@
   }
 
   window.pin = {
-    renderPins: renderPins
+    renderPins: renderPins,
   };
 })();

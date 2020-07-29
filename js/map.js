@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var COUNTCARDS = 8;
   var X_MAIN_PIN = 65;
   var Y_MAIN_PIN = 84;
   var map = document.querySelector('.map');
@@ -10,7 +9,31 @@
   var mapFiltersForm = mapFilters.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
-  var cardsData = window.data.getCards(COUNTCARDS);
+
+  function pinSuccessHandler(cards) {
+    var sortedCards = cards.filter(function (card) {
+      var shouldPresent = true;
+
+      if (typeof card.offer === 'undefined' || card.offer === '') {
+        shouldPresent = false;
+      }
+
+      return shouldPresent;
+    });
+    window.pin.renderPins(sortedCards);
+  }
+
+  function pinErrorHandler(errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('map', node);
+  }
 
   function activePage(evt) {
     if (evt.button === 0 || evt.key === window.utils.ENTER_KEY) {
@@ -21,7 +44,9 @@
         adForm.classList.remove('ad-form--disabled');
         mapFiltersForm.classList.remove('mapFiltersForm--disabled');
         window.form.deleteAttribute(adFormFieldset, 'disabled');
-        window.pin.renderPins(cardsData);
+
+        window.backend.load(window.backend.Url.GET_CARDS, window.backend.Method.GET, pinSuccessHandler, pinErrorHandler);
+
         window.data.getAddress(X_MAIN_PIN, Y_MAIN_PIN);
       }
     }
@@ -35,6 +60,6 @@
     Y_MAIN_PIN: Y_MAIN_PIN,
     map: map,
     mapPinMain: mapPinMain,
-    activePage: activePage
+    activePage: activePage,
   };
 })();
