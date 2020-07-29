@@ -16,6 +16,7 @@
   };
 
   var TIMEOUT_IN_MS = 10000;
+
   function load(url, method, onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -35,7 +36,6 @@
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
-
     xhr.open(method, url);
 
     return xhr;
@@ -52,7 +52,7 @@
     xhr.send(data);
   }
 
-  window.server = {
+  window.backend = {
     Method: Method,
     Url: Url,
     load: load,

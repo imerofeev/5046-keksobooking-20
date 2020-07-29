@@ -2,7 +2,6 @@
 
 (function () {
   var pinTemplate = document.querySelector('#pin').content;
-
   var pinsContainer = document.querySelector('.map__pins');
 
   function createPin(card) {
@@ -23,7 +22,7 @@
       }
 
       activeElement.classList.add('map__pin--active');
-      window.card.renderCard(container, window.card.createCard(card));
+      window.card.render(container, window.card.create(card));
     });
 
     return pin;
@@ -38,14 +37,15 @@
   }
 
   function clearPins() {
-    var buttonPin = window.map.container.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < buttonPin.length; i++) {
-      pinsContainer.removeChild(buttonPin[i]);
-    }
+    var pins = window.map.container.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    pins.forEach(function (item) {
+      pinsContainer.removeChild(item);
+    });
   }
 
   window.pin = {
-    renderPins: renderPins,
-    clearPins: clearPins
+    render: renderPins,
+    clear: clearPins
   };
 })();
