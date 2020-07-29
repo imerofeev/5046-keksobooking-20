@@ -6,7 +6,8 @@
   };
 
   var Url = {
-    GET_CARDS: 'https://javascript.pages.academy/keksobooking/data'
+    GET_CARDS: 'https://javascript.pages.academy/keksobooking/data',
+    SEND_FORM: 'https://javascript.pages.academy/keksobooking'
   };
 
   var Method = {
@@ -23,7 +24,7 @@
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
       } else {
-        onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
+        onError('Произошла ошибка. Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
       }
     });
     xhr.addEventListener('error', function () {
@@ -36,12 +37,25 @@
     xhr.timeout = TIMEOUT_IN_MS;
 
     xhr.open(method, url);
+
+    return xhr;
+  }
+
+  function download(onSuccess, onError) {
+    var xhr = load(Url.GET_CARDS, Method.GET, onSuccess, onError);
     xhr.send();
   }
 
-  window.backend = {
+  function save(data, onSuccess, onError) {
+    var xhr = load(Url.SEND_FORM, Method.POST, onSuccess, onError);
+    xhr.send(data);
+  }
+
+  window.server = {
     Method: Method,
     Url: Url,
-    load: load
+    load: load,
+    download: download,
+    save: save
   };
 })();

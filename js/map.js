@@ -3,12 +3,17 @@
 (function () {
   var X_MAIN_PIN = 65;
   var Y_MAIN_PIN = 84;
+  var main = document.querySelector('main');
   var map = document.querySelector('.map');
   var mapPinMain = map.querySelector('.map__pin--main');
   var mapFilters = map.querySelector('.map__filters-container');
   var mapFiltersForm = mapFilters.querySelector('.map__filters');
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
+  var error = document.querySelector('#error').content;
+  var errorElement = error.querySelector('.error');
+  var errorContent = errorElement.querySelector('.error__message');
+  var errorButton = errorElement.querySelector('.error__button');
 
   function pinSuccessHandler(cards) {
     var sortedCards = cards.filter(function (card) {
@@ -23,20 +28,26 @@
     window.pin.renderPins(sortedCards);
   }
 
-  function pinErrorHandler(errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
+  function errorHandler(errorMessage) {
+    main.appendChild(errorElement);
+    errorContent.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', errorElement);
 
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('map', node);
+    errorButton.addEventListener('click', function () {
+      window.util.closePopup(errorElement);
+    });
+    errorElement.addEventListener('click', function () {
+      window.util.closePopup(errorElement);
+    });
+    document.addEventListener('keydown', function (evt) {
+      window.util.onPopupEscPress(evt, function () {
+        window.util.closePopup(errorElement);
+      });
+    });
   }
 
   function activePage(evt) {
-    if (evt.button === 0 || evt.key === window.utils.ENTER_KEY) {
+    if (evt.button === 0 || evt.key === window.util.ENTER_KEY) {
       var mapPin = map.querySelectorAll('.map__pin:not(.map__pin--main)');
 
       if (mapPin.length === 0) {
@@ -45,7 +56,7 @@
         mapFiltersForm.classList.remove('mapFiltersForm--disabled');
         window.form.deleteAttribute(adFormFieldset, 'disabled');
 
-        window.backend.load(window.backend.Url.GET_CARDS, window.backend.Method.GET, pinSuccessHandler, pinErrorHandler);
+        window.server.download(pinSuccessHandler, errorHandler);
 
         window.data.getAddress(X_MAIN_PIN, Y_MAIN_PIN);
       }
@@ -59,7 +70,9 @@
     X_MAIN_PIN: X_MAIN_PIN,
     Y_MAIN_PIN: Y_MAIN_PIN,
     map: map,
+    mapFiltersForm: mapFiltersForm,
     mapPinMain: mapPinMain,
     activePage: activePage,
+    errorHandler: errorHandler
   };
 })();

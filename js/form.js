@@ -20,6 +20,7 @@
     house: '5000',
     palace: '10000'
   };
+  var main = document.querySelector('main');
   var adForm = document.querySelector('.ad-form');
   var adFormFieldset = adForm.querySelectorAll('fieldset');
   var titleInput = adForm.querySelector('#title');
@@ -29,6 +30,8 @@
   var guests = adForm.querySelector('#capacity');
   var ckeckin = adForm.querySelector('#timein');
   var ckeckout = adForm.querySelector('#timeout');
+  var success = document.querySelector('#success').content;
+  var successElement = success.querySelector('.success');
 
   function getValidElement(evt, selectFirst, selectSecond, objectKeys) {
     var el = (typeof evt === 'undefined') ? selectFirst : evt.currentTarget;
@@ -60,6 +63,35 @@
       }
     }
   }
+
+  function formSuccessHandler() {
+    var mapPin = window.map.map.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    window.map.map.classList.add('map--faded');
+    adForm.classList.add('ad-form--disabled');
+    window.map.mapFiltersForm.classList.add('mapFiltersForm--disabled');
+    addAttribute(adFormFieldset, 'disabled');
+    main.appendChild(successElement);
+    adForm.reset();
+    window.map.mapPinMain.style.left = '570px';
+    window.map.mapPinMain.style.top = '375px';
+    document.addEventListener('keydown', function (evt) {
+      window.util.onPopupEscPress(evt, function () {
+        window.util.closePopup(successElement);
+      });
+    });
+    document.addEventListener('click', function () {
+      window.util.closePopup(successElement);
+    });
+    for (var i = 0; i < mapPin.length; i++) {
+      mapPin[i].remove();
+    }
+  }
+
+  adForm.addEventListener('submit', function (evt) {
+    window.server.save(new FormData(adForm), formSuccessHandler, window.map.errorHandler);
+    evt.preventDefault();
+  });
 
   getValidElement(undefined, rooms, guests, RoomsForGuests);
   addAttribute(adFormFieldset, 'disabled');

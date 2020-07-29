@@ -4,17 +4,15 @@
   var ESC_KEY = 'Escape';
   var ENTER_KEY = 'Enter';
 
-  function onPopupEscPress(evt) {
+  function onPopupEscPress(evt, action) {
     if (evt.key === ESC_KEY) {
-      closePopup();
+      action();
     }
   }
 
-  function closePopup() {
-    var popup = window.map.map.querySelector('.popup');
-
-    if (popup) {
-      popup.remove();
+  function closePopup(element) {
+    if (element) {
+      element.remove();
     }
     document.removeEventListener('keydown', onPopupEscPress);
   }
@@ -43,7 +41,7 @@
     return newArr;
   }
 
-  window.utils = {
+  window.util = {
     ENTER_KEY: ENTER_KEY,
     onPopupEscPress: onPopupEscPress,
     closePopup: closePopup,
