@@ -44,6 +44,7 @@
   function download(onSuccess, onError) {
     var xhr = load(Url.GET_CARDS, Method.GET, onSuccess, onError);
     xhr.send();
+    return xhr;
   }
 
   function save(data, onSuccess, onError) {

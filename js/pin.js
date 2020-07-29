@@ -22,12 +22,22 @@
   }
 
   function renderPins(cards) {
-    for (var i = 0; i < cards.length; i++) {
+    var takeNumber = cards.length > 5 ? 5 : cards.length;
+
+    for (var i = 0; i < takeNumber; i++) {
       pinTemplateElement.appendChild(createPin(cards[i]));
     }
   }
 
+  function clearPins() {
+    var buttonPin = window.map.map.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < buttonPin.length; i++) {
+      pinTemplateElement.removeChild(buttonPin[i]);
+    }
+  }
+
   window.pin = {
-    renderPins: renderPins
+    renderPins: renderPins,
+    clearPins: clearPins
   };
 })();
