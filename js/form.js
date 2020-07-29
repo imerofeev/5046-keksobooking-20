@@ -3,18 +3,19 @@
 (function () {
   var MIN_TITLE_LENGTH = 30;
   var MAX_TITLE_LENGTH = 100;
-  var roomsForGuests = {
+
+  var roomsForGuestsArr = {
     '1': ['1'],
     '2': ['2', '1'],
     '3': ['3', '2', '1'],
     '100': ['0']
   };
-  var timeKey = {
+  var timeKeyArr = {
     '12:00': ['12:00'],
     '13:00': ['13:00'],
     '14:00': ['14:00']
   };
-  var housingPrice = {
+  var housingPriceArr = {
     bungalo: '0',
     flat: '1000',
     house: '5000',
@@ -38,7 +39,7 @@
   var errorButton = errorPopup.querySelector('.error__button');
   var resetButton = adForm.querySelector('.ad-form__reset');
 
-  window.util.getValidElement(undefined, rooms, guests, roomsForGuestsMap);
+  window.util.getValidElement(undefined, rooms, guests, roomsForGuest);
   window.util.addAttribute(adFormFieldset, 'disabled');
 
   function onFormSuccessSubmit() {
@@ -47,7 +48,7 @@
     window.map.container.classList.add('map--faded');
     adForm.classList.add('ad-form--disabled');
     window.map.filters.classList.add('mapFiltersForm--disabled');
-    window.utils.addAttribute(adFormFieldset, 'disabled');
+    window.util.addAttribute(adFormFieldset, 'disabled');
     main.appendChild(successPopup);
     adForm.reset();
     window.data.pinMain.style.left = '570px';
@@ -108,7 +109,7 @@
     evt.preventDefault();
   });
 
-  getValidElement(undefined, rooms, guests, RoomsForGuests);
+  getValidElement(undefined, rooms, guests, RoomsForGuestsArr);
   addAttribute(adFormFieldset, 'disabled');
 
   title.addEventListener('input', function (evt) {
@@ -148,8 +149,8 @@
   typeHouse.addEventListener('change', function (evt) {
     var target = evt.target;
 
-    price.placeholder = housingPrice[target.value];
-    price.min = housingPrice[target.value];
+    price.placeholder = housingPriceArr[target.value];
+    price.min = housingPriceArr[target.value];
   });
 
   price.addEventListener('input', function (evt) {
@@ -195,11 +196,11 @@
   });
 
   rooms.addEventListener('change', function (evt) {
-    getValidElement(evt, rooms, guests, roomsForGuests);
+    getValidElement(evt, rooms, guests, roomsForGuestsArr);
   });
 
   timeIn.addEventListener('change', function (evt) {
-    window.util.getValidElement(evt, timeIn, timeOut, timeKey);
+    window.util.getValidElement(evt, timeIn, timeOut, timeKeyArr);
   });
 
   window.form = {
