@@ -9,21 +9,21 @@
 
   function updatePins(cards) {
     var sortedCards = cards.filter(function (card) {
-      var shouldPresent = true;
+      var isShouldPresent = true;
 
       if (typeof card.offer === 'undefined' || card.offer === '') {
-        shouldPresent = false;
+        isShouldPresent = false;
       }
-      return shouldPresent;
+      return isShouldPresent;
     });
-    window.pin.renderPins(sortedCards);
+    window.pin.render(sortedCards);
   }
 
   function reloadPins() {
     var popup = document.querySelector('.popup');
     window.util.closePopup(popup);
-    window.pin.clearPins();
-    window.pin.renderPins(window.map.filteredOffers);
+    window.pin.clear();
+    window.pin.render(window.map.filteredOffers);
   }
 
   window.map.filters.addEventListener('change', window.util.debounce(function () {

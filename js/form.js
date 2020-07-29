@@ -7,18 +7,18 @@
   var MAIN_PIN_LOCATION_Y = '375px';
   var PRICE_FLAT_MIN = '1000';
   var AVATAR_SRC_DEFAULT = 'img/muffin-grey.svg';
-  var roomsForGuestsMap = {
+  var roomsForGuestsArr = {
     '1': ['1'],
     '2': ['2', '1'],
     '3': ['3', '2', '1'],
     '100': ['0']
   };
-  var timeKeyMap = {
+  var timeKeyArr = {
     '12:00': ['12:00'],
     '13:00': ['13:00'],
     '14:00': ['14:00']
   };
-  var housingPriceMap = {
+  var housingPriceArr = {
     bungalo: '0',
     flat: '1000',
     house: '5000',
@@ -43,8 +43,8 @@
   var resetButton = adForm.querySelector('.ad-form__reset');
 
   window.util.addAttribute(adFormFieldset, 'disabled');
-  window.util.getValidElement(undefined, rooms, guests, roomsForGuestsMap);
-  window.util.getValidElement(undefined, timeIn, timeOut, timeKeyMap);
+  window.util.getValidElement(undefined, rooms, guests, roomsForGuestsArr);
+  window.util.getValidElement(undefined, timeIn, timeOut, timeKeyArr);
 
   function lockForm() {
     adForm.classList.add('ad-form--disabled');
@@ -57,8 +57,8 @@
     window.avatar.imageHousing.src = ' ';
     price.placeholder = 'от ' + PRICE_FLAT_MIN;
     price.min = PRICE_FLAT_MIN;
-    window.util.getValidElement(undefined, rooms, guests, roomsForGuestsMap);
-    window.util.getValidElement(undefined, timeIn, timeOut, timeKeyMap);
+    window.util.getValidElement(undefined, rooms, guests, roomsForGuestsArr);
+    window.util.getValidElement(undefined, timeIn, timeOut, timeKeyArr);
   }
 
   function resetMap() {
@@ -156,8 +156,8 @@
   typeHouse.addEventListener('change', function (evt) {
     var target = evt.target;
 
-    price.placeholder = 'от ' + housingPriceMap[target.value];
-    price.min = housingPriceMap[target.value];
+    price.placeholder = 'от ' + housingPriceArr[target.value];
+    price.min = housingPriceArr[target.value];
   });
 
   price.addEventListener('input', function (evt) {
@@ -203,11 +203,11 @@
   });
 
   function onChangeRooms(evt) {
-    window.util.getValidElement(evt, rooms, guests, roomsForGuestsMap);
+    window.util.getValidElement(evt, rooms, guests, roomsForGuestsArr);
   }
 
   function onChangeTimeIn(evt) {
-    window.util.getValidElement(evt, timeIn, timeOut, timeKeyMap);
+    window.util.getValidElement(evt, timeIn, timeOut, timeKeyArr);
   }
 
   rooms.addEventListener('change', onChangeRooms);
