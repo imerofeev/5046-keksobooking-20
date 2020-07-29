@@ -41,11 +41,10 @@
           filterHousingGuests(offer) &&
           filterHousingFeatures(offer)
         );
-      });
+      })
   };
 
   function filterHousingType(card) {
-    var housing = window.map.mapFiltersForm.querySelector('#housing-type');
     return housingType.value === 'any' ? true : card.offer.type === housingType.value;
   }
 
