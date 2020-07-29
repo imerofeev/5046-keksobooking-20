@@ -4,14 +4,12 @@
   var MAIN_PIN_CIRCLE = 65;
   var MAIN_PIN_HALF_CIRCLE = 33;
 
-  var map = document.querySelector('.map');
-  var mapPinMain = map.querySelector('.map__pin--main');
-  var adForm = document.querySelector('.ad-form');
+  var pinMain = document.querySelector('.map__pin--main');
+  var inputAddress = document.querySelector('#address');
 
   function getAddress(xPin, yPin) {
-    var inputAddress = adForm.querySelector('#address');
-    var left = mapPinMain.style.left;
-    var top = mapPinMain.style.top;
+    var left = pinMain.style.left;
+    var top = pinMain.style.top;
     var xLocation = Math.floor(Number(left.replace('px', '')) + Math.floor(xPin / 2));
     var yLocation = Math.floor(Number(top.replace('px', '')) + yPin);
 
@@ -29,5 +27,8 @@
 
   window.data = {
     getAddress: getAddress,
+    pinMain: pinMain,
+    MAIN_PIN_X: MAIN_PIN_CIRCLE,
+    MAIN_PIN_Y: MAIN_PIN_HALF_CIRCLE
   };
 })();
