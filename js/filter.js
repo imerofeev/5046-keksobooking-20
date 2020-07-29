@@ -41,8 +41,8 @@
           filterHousingGuests(offer) &&
           filterHousingFeatures(offer)
         );
-      })
-  };
+      });
+  }
 
   function filterHousingType(card) {
     return housingType.value === 'any' ? true : card.offer.type === housingType.value;
