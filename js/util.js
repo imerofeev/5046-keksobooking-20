@@ -3,6 +3,39 @@
 (function () {
   var ESC_KEY = 'Escape';
   var ENTER_KEY = 'Enter';
+  var DEBOUNCE_INTERVAL = 500;
+
+
+  function getValidElement(evt, selectFirst, selectSecond, objectKeys) {
+    var element = (typeof evt === 'undefined') ? selectFirst : evt.currentTarget;
+    var validElement = objectKeys[element.value];
+    var selectSecondOption = selectSecond.querySelectorAll('option');
+
+    if (selectSecondOption) {
+      for (var i = 0; i < selectSecondOption.length; i++) {
+        var optionElements = selectSecondOption[i];
+
+        optionElements.disabled = (validElement.indexOf(optionElements.value) === -1) ? true : false;
+      }
+      selectSecond.querySelector('option[value="' + validElement[0] + '"]').selected = true;
+    }
+  }
+
+  function addAttribute(tagList, attributeName) {
+    if (tagList) {
+      for (var i = 0; i < tagList.length; i++) {
+        tagList[i].setAttribute(attributeName, 'true');
+      }
+    }
+  }
+
+  function deleteAttribute(tagList, attributeName) {
+    if (tagList) {
+      for (var i = 0; i < tagList.length; i++) {
+        tagList[i].removeAttribute(attributeName);
+      }
+    }
+  }
 
   function onPopupEscPress(evt, action) {
     if (evt.key === ESC_KEY) {
@@ -17,36 +50,27 @@
     document.removeEventListener('keydown', onPopupEscPress);
   }
 
-  function getRandElement(min, max) {
-    return Math.floor(min + Math.random() * (max + 1 - min));
-  }
+  function debounce(cb) {
+    var lastTimeout = null;
 
-  function getRandElementArr(arr) {
-    var randItem;
-
-    for (var i = 0; i < arr.length; i++) {
-      randItem = Math.floor(Math.random() * arr.length);
-    }
-    return arr[randItem];
-  }
-
-  function getRandLengthArr(arr) {
-    var newArr = [];
-    var newLength = getRandElement(1, arr.length);
-
-    for (var k = 0; k < newLength; k++) {
-      newArr[k] = getRandElementArr(arr);
-    }
-
-    return newArr;
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
   }
 
   window.util = {
     ENTER_KEY: ENTER_KEY,
     onPopupEscPress: onPopupEscPress,
     closePopup: closePopup,
-    getRandElement: getRandElement,
-    getRandElementArr: getRandElementArr,
-    getRandLengthArr: getRandLengthArr
+    debounce: debounce,
+    getValidElement: getValidElement,
+    addAttribute: addAttribute,
+    deleteAttribute: deleteAttribute
   };
 })();
